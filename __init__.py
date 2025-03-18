@@ -96,11 +96,23 @@ def train_model(df):
 
     return model
 
+# PASO 6 - PRUEBA PREDICCIONES MODELO
+def predict(model: RandomForestClassifier, df: pd.DataFrame):
+    """Realiza predicciones con el modelo entrenado."""
+    # Creamos un set de 5 datos del set original para evaluar el modelo
+    sample = df.sample(5)[["education-num", "age", "hours-per-week"]]
+    predictions = model.predict(sample)
+    print("Ejemplo de datos seleccionados:")
+    print(sample)
+    print(f"Predicción para el nuevo dato: {predictions}")
+
+
 # EJECUCIÓN DEL CICLO DE VIDA DEL DATO
 if __name__ == "__main__":
     df = load_data("adult.csv")  # Cargar datos
     df = clean_data(df)  # Limpiar datos
     save_cleaned_data(df)  # Guardar datos limpios
     plot_data(df)  # Visualizar datos
-    train_model(df)  # Entrenar modelo
-
+    model = train_model(df)  # Entrenar modelo
+    prediction = predict(model, df) # Evaluacion predicciones modelo
+    
